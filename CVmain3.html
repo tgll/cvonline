@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+<!-- La realisation de ce site a ete possible grace a au travail de Yasmine Khansari et de l'aide de Simon Talaga, merci à tous les deux ! -->
+<html lang="fr">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+	<title>Tallulah GILLIARD - Un CV Interactif</title>
+
+	<meta property="twitter:site" content="@tllhglld" />
+
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Chivo" />
+<link rel="stylesheet" href="src/libs.min.css" /> 
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="src/idealCand.min.css?v=3" /> 
+
+
+	
+
+</head>
+<body>
+
+	
+<div id="idealcand" class="container-fluid">
+	<!--
+	<div class="flags">
+		<a href="?lang=en"><img src="assets/en.png" alt="english" /></a> 
+		<a href="?lang=fr"><img src="assets/fr.svg" alt="français" /></a> 
+	</div>
+	-->
+	<div class="header row">
+		<div class="vcenter">
+
+			<div class="prefix">Looking for a Human<br />Computer Interaction developer ?</div>
+
+			<h1>Find out if I am<br />the candidate <br /><span id="typing"></span></h1>
+
+			<div style="margin-top: 50px;">Click on your selection criteria in 3 quick and simple steps<br />And test our professional compatibility calculated by a "magical" algorithm</div>
+
+			<div style="margin: 50px 0 40px 0;">
+				<a href="#" class="btn btn-lg btn-warning" data-bind="click: scrollToTest">Do the test</a>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="sections-title row">
+		<div data-bind="foreach: sectionsId">
+			<div class="item" data-bind="
+				text: $parent.sections[$data].title,
+				css: $data, click: $root.goToSection.bind($root),
+				style: { width: $index() == 0 ? '86%' : '', color: $index() == 0 ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0)' }"></div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="sections row" data-bind="foreach: sectionsId">
+
+		<div class="box" data-bind="
+			css: $data + ($root.sections[$data].data.length <= 6 ? ' bigItem' : ' smallItem'),
+			style: { display: $index() == 0 ? 'block' : 'none' }">
+
+			<div class="content" data-bind="foreach: $root.sections[$data].data">
+				<div class="item" data-bind="click: $root.selectItem.bind($root), css: { on: $data.isSelected }">
+					<span class="glyphicon" data-bind="css: 'ico-' + $data.ico"></span><br />
+					<span data-bind="text: $data.title"></span>
+				</div>
+			</div>
+
+			<div class="clearfix"></div>
+		</div>
+
+	</div>
+
+	<div class="sections-info row">
+
+		<div>
+			<span class="dot skills" data-bind="css: { on: sections['skills'].notSelected() == 0 }"></span>
+			<span class="dot qualifs" data-bind="css: { on: sections['qualifs'].notSelected() == 0 }"></span>
+			<span class="dot bonus" data-bind="css: { on: sections['bonus'].notSelected() == 0 }"></span>
+		</div>
+
+		<div style="margin-top: 5px;font-size: 1.1em;">
+			You still have
+			<span class="miss" data-bind="text: sections[curSid()].notSelected(), css: curSid()"></span>
+			<span data-bind="text: sections[curSid()].notSelected() > 1 ? sections[curSid()].titlePlural : sections[curSid()].titleSingular"></span>
+			to choose.
+		</div>
+
+		
+
+	</div>
+
+	<div class="resume" data-bind="visible: isResult">
+
+		<div class="tlh row">
+			<div class="col-md-12">
+
+				<div class="row">
+					<div class="col-md-12" style="text-align: center;">
+						<h1>Tallulah GILLIARD</h1>
+					</div>
+				</div>
+	
+				<div class="row">
+					<div class="col-md-4">
+						<div class="about">
+							<p style="font-weight: bold;font-size: large;">About</p>
+							<p>
+								Hello world !
+								I will graduate this october of a Master degree in Human Computer Interaction and Design from Université Paris-Saclay and KTH University (Stockholm) and will be ready to start an exciting new job in september 2019 !
+								<br>I am interested in machine learning, mathematical modelisations, robotics, haptics, gestural, musical and tangible interactions (TUI) and also mixed reality interactions, intelligent clothing or neurosciences..<br/>
+								<a href="https://twitter.com/tllhglld" target="_blank"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.linkedin.com/in/tallulahg/" target="_blank"><i class="fa fa-linkedin"></i></a>
+							</p>
+						</div>
+					</div>
+					<div class="col-md-4" style="text-align: center;">
+						<img src="assets/tllhphoto.png" style="margin: 0 auto;width: 250px;" alt="Tallulah" class="img-responsive" />
+					</div>
+					<div class="col-md-4">
+						<p class="detail" style="background-color: #0000ff;">Bachelor in Maths & cognitive science</p>
+						<p class="detail" style="background-color: #fca73a;">Technical Degree in Computer Science "Special Year"</p>
+						<p class="detail" style="background-color: #ff9c8a;">Master in Human Computer Interaction (HCI)</p>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+		<div class="row" style="text-align: center;margin-top: -1px;">
+			<img src="assets/resumego.png" alt="" />
+		</div>
+
+		<div class="items row">
+			<div data-bind="foreach: selectedItems">
+				<div class="item">
+
+					<div class="circle" data-dimension="110" data-width="7"
+						data-bind="attr: {
+							'data-percent': $data.percent,
+							'data-fgcolor': $data.sid == 'skills' ? '#0000ff' : $data.sid == 'qualifs' ? '#fca73a' : '#ff9c8a'
+							}">
+						<div class="glyphicon" data-bind="css: 'ico-' + $data.ico"></div>
+						
+					</div>
+
+					<div class="title" data-bind="text: $data.title"></div>
+
+					<div class="desc" data-bind="html: $data.desc"></div>
+
+				</div>
+				<div data-bind="if: $index() == 2">
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+
+		<div class="result row">
+			<div class="col-md-12">
+				
+				<p>Great! You have a <span data-bind="text: resultPercent"></span>% professional compatibility with Tallulah GILLIARD! Contact your candidate to find out more.</p>
+
+				<table class="big">
+					<tr>
+						<td>Tallulah GILLIARD</td>
+						<td>
+							<div class="circle" data-dimension="110" data-width="7" data-fgcolor="#0000ff" data-fontsize=""></div>
+						</td>
+						<td><span class="you">You</span></td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+
+	</div>
+
+	<div class="contactpop row" data-bind="visible: isResult">
+
+		<div class="col-md-12">
+			<h4>Contact me by email</h4>
+			<h4><a href="mailto:t.gilliard@gmail.com">t.gilliard@gmail.com</a></h4>
+			<br/>
+		</div>
+
+	<div class="contacts row" data-bind="visible: isResult">
+		<div class="col-md-4">
+			<p>Share my CV.</p>
+			<p>
+				<a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A//lareinemerlin.org/wp-content/uploads/2018/10/cv/Tallulah-Gilliard.html&title=A%20la%20recherche%20d%E2%80%99un%20profil%20en%20IHM%20?%20D%C3%A9couvrez%20le%20CV%20interactif%20de%20Tallulah%20GILLIARD%20&summary=D%C3%A9terminez%20vos%20crit%C3%A8res%20de%20recherche%20en%203%20%C3%A9tapes%20Et%20d%C3%A9couvrez%20si%20je%20suis%20le%20candidat%20que%20vous%20cherchez.&source=" class="btn btn-warning" target="_blank" role="button" style="background-color:#0e76a8;border-color:#0e76a8;"><i class="fa fa-linkedin logo"></i> Linkedin</a>
+				<a href="https://twitter.com/home?status=A%20la%20recherche%20d%E2%80%99un%20profil%20en%20IHM%20?%20D%C3%A9couvrez%20le%20CV%20interactif%20de%20Tallulah%20GILLIARD%20@tllhglld%20http%3A//lareinemerlin.org/wp-content/uploads/2018/10/cv/Tallulah-Gilliard.html" class="btn btn-warning" target="_blank" role="button" style="background-color:#4099FF;border-color:#4099FF;"><i class="fa fa-twitter logo"></i> Twitter</a>
+			</p>
+		</div>
+		<div class="col-md-4">
+			<p>See also my classic CV.</p>
+			<h4><p><a href="./assets/cv.pdf" class="btn btn-warning" target="_blank" role="button" style="background-color:#0000ff;border-color:#0000ff;font-size:1.2em;padding:5px 25px"><i class="fa fa-file-text-o"></i> See the CV</a></p></h4>
+		</div>
+		<div class="col-md-4">
+			<p>You wish to revise your criteria?</p>
+			<p><button type="button" class="btn btn-warning" data-bind="click: restart" style="background-color:#ff9c8a;border-color:#ff9c8a;;padding:8px 12px"><i class="fa fa-play"></i> Do the test again</button></p>
+		</div>
+	</div>
+
+	<div class="footer row">
+		<div class="col-md-12 box" data-bind="visible: isResult">
+
+			<div class="row">
+				<div class="col-md-12">
+					<p class="title">About this website</p>
+					<p><img src="assets/tllhphoto.png" style="margin: 0 auto;height: 170px;" alt="" class="img-responsive" /></p>
+					<p class="name">
+						Tallulah Gilliard
+						<a href="https://twitter.com/tllhglld" target="_blank"><i class="fa fa-twitter"></i></a>
+						<a href="https://www.linkedin.com/in/tallulahg/" target="_blank"><i class="fa fa-linkedin"></i></a>
+					</p>
+					<p>Hello dear recruiters. I wanted you to have an entertaining web CV. 
+						<br>Do not hesitate to contact me if you have any questions or suggestions. Talk to you soon !<br/>
+					</p>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+	
+	
+
+<script type="text/javascript" src="src/libs.min.js"></script> 
+<script type="text/javascript" src="src/idealCand.min.js?v=3"></script> 
+<script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer></script>
+
+<script type="text/javascript">
+	$(function (){
+
+		$("#typing").typed({
+			strings: ['you’re looking for', 'you need', 'who is ideal'],
+			loop: true,
+			backDelay: 2500
+		});
+
+		var db = eval('DbEn');
+		ko.applyBindings(new IdealCandViewModel(db));
+
+	});
+</script>
+
+
+	
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-65261402-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+</body>
+</html>
